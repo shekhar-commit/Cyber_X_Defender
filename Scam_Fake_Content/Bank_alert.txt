@@ -1,0 +1,7 @@
+Urgent Security Alert from Your Bank
+
+Dear Customer,
+
+We have detected suspicious activity on your account. To secure your funds, please click here to verify your information: http://verify-bank-info.com. Failure to act now may result in account closure.
+
+Do not reply to this email. Contact: support@bankverify.net

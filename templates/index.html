@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberX Defender - URL & File Scanner</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url("https://thumbs.dreamstime.com/b/data-defender-padlock-illustrating-cyber-security-internet-safety-generative-ai-virtual-space-emerges-as-stalwart-299371470.jpg") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Title on image */
+    .title-overlay {
+      position: fixed;
+      top: 40px;
+      width: 100%;
+      text-align: center;
+      font-size: 48px;
+      font-weight: 900;
+      color: #58a6ff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+      z-index: 1001;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+
+    /* Navbar hidden, title moved outside container */
+    .navbar {
+      display: none;
+    }
+
+    .container {
+      margin-top: 140px;
+      background: rgba(31, 31, 31, 0.85);
+      padding: 40px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      color: #e6eef8;
+      z-index: 10;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 95%;
+      padding: 14px;
+      font-size: 18px;
+      border: 2px solid #58a6ff;
+      border-radius: 8px;
+      background-color: #121212;
+      color: white;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    input::file-selector-button {
+      background-color: #58a6ff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin-right: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button {
+      background-color: #238636;
+      color: white;
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(46,160,67,0.15);
+    }
+
+    .scan-icon {
+      font-size: 18px;
+    }
+
+    .spinner {
+      display: none;
+      margin: 10px auto;
+      border: 5px solid #333;
+      border-top: 5px solid #58a6ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 18px;
+      background-color: rgba(20,20,20,0.9);
+      border-left: 6px solid #ffffff10;
+      text-align: left;
+      color: #e6eef8;
+    }
+
+    .benign { color: #34D399; }
+    .defacement { color: #FBBF24; }
+    .malware { color: #F87171; }
+    .phishing { color: #A78BFA; }
+    .unknown { color: #ffffff; }
+
+    h2 {
+      margin-top: 6px;
+      margin-bottom: 18px;
+      font-size: 22px;
+      color: #58a6ff;
+    }
+
+    form {
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 10px;
+      text-align: left;
+      color: #cfe7ff;
+    }
+  </style>
+
+  <script>
+    function showSpinner(formId, spinnerId) {
+      document.getElementById(spinnerId).style.display = 'block';
+      setTimeout(() => {
+        document.getElementById(spinnerId).style.display = 'none';
+      }, 3000); // Simulated delay
+    }
+  </script>
+</head>
+
+<body>
+
+  <!-- Title shown over the background image -->
+  <div class="title-overlay">
+    <i class="fas fa-shield-alt"></i> CyberX Defender
+  </div>
+
+  <div class="container">
+    <h2><i class="fas fa-exclamation-triangle"></i> Malicious File Scanner</h2>
+    <form action="/scam/" method="post" enctype="multipart/form-data" onsubmit="showSpinner('fileForm', 'fileSpinner')">
+      <label for="file">Upload a file (PDF/TXT only):</label>
+      <input type="file" name="file" required />
+      <button type="submit"><i class="fas fa-upload scan-icon"></i> Analyze</button>
+      <div id="fileSpinner" class="spinner"></div>
+    </form>
+
+    {% if message %}
+      <h3>Result:</h3>
+      <p>{{ message }}</p>
+    {% endif %}
+
+    <h2><i class="fas fa-link"></i> URL Threat Detection</h2>
+    <form method="post" action="/predict" onsubmit="showSpinner('urlForm', 'urlSpinner')">
+      <label for="url">Enter URL:</label>
+      <input type="text" name="url" required />
+      <button type="submit"><i class="fas fa-search"></i> Classify</button>
+      <div id="urlSpinner" class="spinner"></div>
+    </form>
+
+    {% if predicted_class %}
+      <div class="result-box {{ predicted_class.lower() }}">
+        <p><strong>URL:</strong> {{ input_url }}</p>
+        <p><strong>Predicted Class:</strong> {{ predicted_class }}</p>
+      </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
