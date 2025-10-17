@@ -18,7 +18,7 @@
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/threatguard.git
+   git clone https://github.com/shekhar-commit/Cyber_X_Defender
    cd threatguard
 ------------------------------------------------
 2. Install dependencies:----->
